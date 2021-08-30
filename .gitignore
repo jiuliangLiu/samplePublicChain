@@ -1,3 +1,4 @@
 main
 blockchain.db*
 *.db
+.vscode

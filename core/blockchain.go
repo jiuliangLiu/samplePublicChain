@@ -84,22 +84,20 @@ func (blc *Blockchain) AddBlockToBlockchain(data string) {
 func CreateBlockchainWithGenesisBlock(data string) *Blockchain {
 
 	if DBExists() {
-		fmt.Println("创世区块已经存在")
+		fmt.Println("创世区块已经存在......")
 		os.Exit(1)
 	}
 
-	fmt.Println("正在创建创世区块")
+	fmt.Println("正在创建创世区块......")
 
 	//打开数据库
 	db, err := bolt.Open(dbName, 0600, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	//用于存储区块哈希
-	var blockHash []byte
 	//插入数据
 	err = db.Update(func(tx *bolt.Tx) error {
-
+		// 创建数据库表
 		b, err := tx.CreateBucket([]byte(blockTableName))
 		if err != nil {
 			log.Panic(err)
@@ -119,7 +117,6 @@ func CreateBlockchainWithGenesisBlock(data string) *Blockchain {
 			if err != nil {
 				log.Panic(err)
 			}
-			blockHash = genesisBlock.Hash
 		}
 		return nil
 	})
